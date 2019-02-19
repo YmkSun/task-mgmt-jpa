@@ -1,12 +1,17 @@
 package com.ymksun.taskmgmt.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,6 +51,9 @@ public class Board {
 	@Temporal(TemporalType.TIMESTAMP)
 	@UpdateTimestamp
 	private Date updatedAt;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "board")
+	private Set<TaskList> taskLists = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -101,6 +109,14 @@ public class Board {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Set<TaskList> getTaskLists() {
+		return taskLists;
+	}
+
+	public void setTaskLists(Set<TaskList> taskLists) {
+		this.taskLists = (taskLists == null) ? new HashSet<>() : taskLists;
 	}
 
 }
