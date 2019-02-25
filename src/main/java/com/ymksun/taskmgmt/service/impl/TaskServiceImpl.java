@@ -1,5 +1,6 @@
 package com.ymksun.taskmgmt.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ymksun.taskmgmt.exception.ResourceNotFoundException;
 import com.ymksun.taskmgmt.model.Task;
+import com.ymksun.taskmgmt.model.dto.TaskDto;
 import com.ymksun.taskmgmt.repository.TaskRepository;
 import com.ymksun.taskmgmt.service.TaskService;
 
@@ -15,46 +17,55 @@ public class TaskServiceImpl implements TaskService {
 	
 	@Autowired
 	TaskRepository taskRepository;
+	
+	private static final String ENTITY_NAME = "Task";
 
 	@Override
-	public List<Task> getAll() {
-		return taskRepository.findAll();
+	public List<TaskDto> getAll() {
+		List<Task> entityList = taskRepository.findAll();
+		List<TaskDto> dtoList = new ArrayList<>();
+		for(Task obj: entityList) {
+			dtoList.add(TaskDto.mapEntityToDto(obj));
+		}
+		return dtoList;
 	}
 
 	@Override
-	public Task save(Task task) {
-		return taskRepository.save(task);
+	public TaskDto save(TaskDto dto) {
+		Task obj = taskRepository.save(TaskDto.mapDtoToEntity(dto));
+		return TaskDto.mapEntityToDto(obj);
 	}
 
 	@Override
-	public Task getById(Long id) {
-		return taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
+	public TaskDto getById(Long id) {
+		Task obj = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ENTITY_NAME, "id", id));
+		return TaskDto.mapEntityToDto(obj);
 	}
 
 	@Override
-	public Task update(Long id, Task taskDetail) {
-		Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
+	public TaskDto update(Long id, TaskDto dto) {
+		Task obj = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ENTITY_NAME, "id", id));
 		
-		task.setName(taskDetail.getName());
-		task.setContent(taskDetail.getContent());
+		obj.setName(dto.getName());
+		obj.setContent(dto.getContent());
 		
-		Task updatedTask = taskRepository.save(task);
-		return updatedTask;
+		Task updatedObj = taskRepository.save(obj);
+		return TaskDto.mapEntityToDto(updatedObj);
 	}
 
 	@Override
-	public Task delete(Long id) {
-		Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
+	public TaskDto delete(Long id) {
+		Task obj = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ENTITY_NAME, "id", id));
 		
-		task.setStatus(0);
+		obj.setStatus(0);
 		
-		Task updatedTask = taskRepository.save(task);
-		return updatedTask;
+		Task updatedObj = taskRepository.save(obj);
+		return TaskDto.mapEntityToDto(updatedObj);
 	}
 
 	@Override
 	public void terminate(Long id) {
-		Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task", "id", id));
+		Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ENTITY_NAME, "id", id));
 		taskRepository.delete(task);
 	}
 

@@ -2,19 +2,19 @@ package com.ymksun.taskmgmt.service;
 
 import java.util.List;
 
-import com.ymksun.taskmgmt.model.TaskList;
+import com.ymksun.taskmgmt.model.dto.TaskListDto;
 
 public interface TaskListService {
 	
-	List<TaskList> getAll();
+	List<TaskListDto> getAll();
 
-	TaskList save(TaskList TaskList);
+	TaskListDto save(TaskListDto dto);
 
-	TaskList getById(Long id);
+	TaskListDto getById(Long id);
 
-	TaskList update(Long id, TaskList TaskList);
+	TaskListDto update(Long id, TaskListDto dto);
 
-	TaskList delete(Long id);
+	TaskListDto delete(Long id);
 
 	void terminate(Long id);
 }

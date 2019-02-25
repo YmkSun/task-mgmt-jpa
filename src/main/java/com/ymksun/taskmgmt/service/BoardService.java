@@ -8,11 +8,11 @@ public interface BoardService {
 
 	List<BoardDto> getAll();
 
-	BoardDto save(BoardDto board);
+	BoardDto save(BoardDto dto);
 
 	BoardDto getById(Long id);
 
-	BoardDto update(Long id, BoardDto board);
+	BoardDto update(Long id, BoardDto dto);
 
 	BoardDto delete(Long id);
 

@@ -13,14 +13,17 @@ public class BoardDto {
 	private String description;
 	private int type;
 	private int status;
-	private Set<TaskList> taskLists;
+	private Set<TaskListDto> taskLists;
 
 	public BoardDto() {
-		setProperties();
+		setDefaultProperties();
+	}
+	
+	public BoardDto(long id) {
+		this.id = id;
 	}
 
-	public BoardDto(Long id, String name, String description, Integer type, Integer status, Set<TaskList> taskLists) {
-		super();
+	public BoardDto(long id, String name, String description, int type, int status, Set<TaskListDto> taskLists) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -69,15 +72,15 @@ public class BoardDto {
 		this.status = status;
 	}
 
-	public Set<TaskList> getTaskLists() {
+	public Set<TaskListDto> getTaskLists() {
 		return taskLists;
 	}
 
-	public void setTaskLists(Set<TaskList> taskLists) {
+	public void setTaskLists(Set<TaskListDto> taskLists) {
 		this.taskLists = (taskLists != null) ? taskLists : new HashSet<>();
 	}
 
-	public void setProperties() {
+	public void setDefaultProperties() {
 		this.id = 0l;
 		this.name = "";
 		this.description = "";
@@ -93,7 +96,13 @@ public class BoardDto {
 		dto.description = obj.getDescription();
 		dto.type = obj.getType();
 		dto.status = obj.getStatus();
-		dto.taskLists = obj.getTaskLists();
+		Set<TaskListDto> tlSet = new HashSet<>();
+		if(obj.getTaskLists() != null && obj.getTaskLists().size() > 0) {
+			for(TaskList taskList: obj.getTaskLists()) {
+				tlSet.add(TaskListDto.mapEntityToDto(taskList));
+			}
+		}
+		dto.setTaskLists(tlSet);
 		return dto;
 	}
 

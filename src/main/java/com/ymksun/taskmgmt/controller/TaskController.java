@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ymksun.taskmgmt.model.Task;
+import com.ymksun.taskmgmt.model.dto.TaskDto;
 import com.ymksun.taskmgmt.service.TaskService;
 
 @RestController
@@ -27,29 +27,29 @@ public class TaskController {
 	TaskService taskService;
 	
 	@GetMapping("/list")
-	public ResponseEntity<List<Task>> getAllTasks() {
+	public ResponseEntity<List<TaskDto>> getAllTasks() {
 		return new ResponseEntity<>(taskService.getAll(), HttpStatus.OK);
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
+	public ResponseEntity<TaskDto> createTask(@Valid @RequestBody TaskDto task) {
 		return new ResponseEntity<>(taskService.save(task), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<Task> getTaskById(@PathVariable(value = "id") Long taskId) {
+	public ResponseEntity<TaskDto> getTaskById(@PathVariable(value = "id") Long taskId) {
 		return new ResponseEntity<>(taskService.getById(taskId), HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Task> updateTask(@PathVariable(value = "id") Long taskId,
-			@Valid @RequestBody Task taskDetails) {
+	public ResponseEntity<TaskDto> updateTask(@PathVariable(value = "id") Long taskId,
+			@Valid @RequestBody TaskDto taskDetails) {
 		return new ResponseEntity<>(taskService.update(taskId, taskDetails), HttpStatus.OK);
 	}
 
 	@PutMapping("/delete/{id}")
 	public ResponseEntity<Boolean> deleteStatusTask(@PathVariable(value = "id") Long taskId) {
-		Task task = taskService.delete(taskId);
+		TaskDto task = taskService.delete(taskId);
 		return new ResponseEntity<>(task != null ? true : false, HttpStatus.OK);
 	}
 
