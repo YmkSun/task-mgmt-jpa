@@ -1,4 +1,4 @@
-package com.ymksun.taskmgmt.service;
+package com.ymksun.taskmgmt.service.impl;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ymksun.taskmgmt.exception.ResourceNotFoundException;
 import com.ymksun.taskmgmt.model.TaskList;
 import com.ymksun.taskmgmt.repository.TaskListRepository;
+import com.ymksun.taskmgmt.service.TaskListService;
 
 @Service
 public class TaskListServiceImpl implements TaskListService {

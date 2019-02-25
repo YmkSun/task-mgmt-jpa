@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ymksun.taskmgmt.model.Board;
+import com.ymksun.taskmgmt.model.dto.BoardDto;
 import com.ymksun.taskmgmt.service.BoardService;
 
 @RestController
@@ -27,29 +27,29 @@ public class BoardController {
 	BoardService boardService;
 
 	@GetMapping("/list")
-	public ResponseEntity<List<Board>> getAllBoards() {
+	public ResponseEntity<List<BoardDto>> getAllBoards() {
 		return new ResponseEntity<>(boardService.getAll(), HttpStatus.OK);
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<Board> createBoard(@Valid @RequestBody Board board) {
+	public ResponseEntity<BoardDto> createBoard(@Valid @RequestBody BoardDto board) {
 		return new ResponseEntity<>(boardService.save(board), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/get/{id}")
-	public ResponseEntity<Board> getBoardById(@PathVariable(value = "id") Long boardId) {
+	public ResponseEntity<BoardDto> getBoardById(@PathVariable(value = "id") Long boardId) {
 		return new ResponseEntity<>(boardService.getById(boardId), HttpStatus.OK);
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Board> updateBoard(@PathVariable(value = "id") Long boardId,
-			@Valid @RequestBody Board boardDetails) {
+	public ResponseEntity<BoardDto> updateBoard(@PathVariable(value = "id") Long boardId,
+			@Valid @RequestBody BoardDto boardDetails) {
 		return new ResponseEntity<>(boardService.update(boardId, boardDetails), HttpStatus.OK);
 	}
 
 	@PutMapping("/delete/{id}")
 	public ResponseEntity<Boolean> deleteStatusBoard(@PathVariable(value = "id") Long boardId) {
-		Board board = boardService.delete(boardId);
+		BoardDto board = boardService.delete(boardId);
 		return new ResponseEntity<>(board != null ? true : false, HttpStatus.OK);
 	}
 

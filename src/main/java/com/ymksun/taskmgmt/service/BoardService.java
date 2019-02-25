@@ -2,19 +2,19 @@ package com.ymksun.taskmgmt.service;
 
 import java.util.List;
 
-import com.ymksun.taskmgmt.model.Board;
+import com.ymksun.taskmgmt.model.dto.BoardDto;
 
 public interface BoardService {
 
-	List<Board> getAll();
+	List<BoardDto> getAll();
 
-	Board save(Board board);
+	BoardDto save(BoardDto board);
 
-	Board getById(Long id);
+	BoardDto getById(Long id);
 
-	Board update(Long id, Board board);
+	BoardDto update(Long id, BoardDto board);
 
-	Board delete(Long id);
+	BoardDto delete(Long id);
 
 	void terminate(Long id);
 }
