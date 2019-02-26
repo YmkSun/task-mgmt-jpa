@@ -35,7 +35,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardDto save(BoardDto dto) {
 		if(dto.getName().isEmpty()) {
-			new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
+			throw new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
 		}
 		
 		Board obj = boardRepository.save(BoardDto.mapDtoToEntity(dto));		
@@ -51,7 +51,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardDto update(Long id, BoardDto dto) {
 		if(dto.getName().isEmpty()) {
-			new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
+			throw new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
 		}
 		
 		Board obj = boardRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ENTITY_NAME, "id", id));

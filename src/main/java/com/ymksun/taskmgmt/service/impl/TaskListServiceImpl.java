@@ -35,7 +35,7 @@ public class TaskListServiceImpl implements TaskListService {
 	@Override
 	public TaskListDto save(TaskListDto dto) {
 		if(dto.getName().isEmpty()) {
-			new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
+			throw new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
 		}
 		
 		TaskList obj = taskListRepository.save(TaskListDto.mapDtoToEntity(dto));
@@ -51,7 +51,7 @@ public class TaskListServiceImpl implements TaskListService {
 	@Override
 	public TaskListDto update(Long id, TaskListDto dto) {
 		if(dto.getName().isEmpty()) {
-			new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
+			throw new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
 		}
 		
 		TaskList obj = taskListRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ENTITY_NAME, "id", id));

@@ -35,7 +35,7 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public TaskDto save(TaskDto dto) {
 		if(dto.getName().isEmpty()) {
-			new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
+			throw new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
 		}
 		
 		Task obj = taskRepository.save(TaskDto.mapDtoToEntity(dto));
@@ -51,7 +51,7 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public TaskDto update(Long id, TaskDto dto) {
 		if(dto.getName().isEmpty()) {
-			new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
+			throw new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
 		}
 		
 		Task obj = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ENTITY_NAME, "id", id));
