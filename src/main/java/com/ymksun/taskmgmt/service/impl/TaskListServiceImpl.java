@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ymksun.taskmgmt.exception.ResourceCannotBeSavedException;
 import com.ymksun.taskmgmt.exception.ResourceNotFoundException;
+import com.ymksun.taskmgmt.exception.ResourceCannotBeSavedException.RESOURCE_CANNOT_BE_CREATED_REASON;
 import com.ymksun.taskmgmt.model.TaskList;
 import com.ymksun.taskmgmt.model.dto.TaskListDto;
 import com.ymksun.taskmgmt.repository.TaskListRepository;
@@ -32,6 +34,10 @@ public class TaskListServiceImpl implements TaskListService {
 
 	@Override
 	public TaskListDto save(TaskListDto dto) {
+		if(dto.getName().isEmpty()) {
+			new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
+		}
+		
 		TaskList obj = taskListRepository.save(TaskListDto.mapDtoToEntity(dto));
 		return TaskListDto.mapEntityToDto(obj);
 	}
@@ -44,6 +50,10 @@ public class TaskListServiceImpl implements TaskListService {
 
 	@Override
 	public TaskListDto update(Long id, TaskListDto dto) {
+		if(dto.getName().isEmpty()) {
+			new ResourceCannotBeSavedException(RESOURCE_CANNOT_BE_CREATED_REASON.NAME_VALUE_NULL_STAGE, ENTITY_NAME);
+		}
+		
 		TaskList obj = taskListRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ENTITY_NAME, "id", id));
 		
 		obj.setName(dto.getName());
