@@ -17,5 +17,7 @@ public interface UserService {
 	UserDto delete(Long id);
 
 	void terminate(Long id);
+	
+	UserDto login(String id, String pwd);
 
 }

@@ -82,4 +82,10 @@ public class UserServiceImpl implements UserService {
 		userRepository.delete(user);
 	}
 
+	@Override
+	public UserDto login(String id, String pwd) {
+		User user = userRepository.login(id, pwd);
+		return UserDto.mapEntityToDto(user);
+	}
+
 }
