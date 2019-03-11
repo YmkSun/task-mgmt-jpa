@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ymksun.taskmgmt.TaskMgmtApplication;
 import com.ymksun.taskmgmt.exception.ResourceCannotBeSavedException;
 import com.ymksun.taskmgmt.exception.ResourceCannotBeSavedException.RESOURCE_CANNOT_BE_CREATED_REASON;
 import com.ymksun.taskmgmt.exception.ResourceNotFoundException;
@@ -39,6 +40,10 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		User obj = userRepository.save(UserDto.mapDtoToEntity(dto));
+		
+		if(obj!=null) 
+			TaskMgmtApplication.logResult(ENTITY_NAME + " saved!", "INFO");
+		
 		return UserDto.mapEntityToDto(obj);
 	}
 
@@ -63,6 +68,10 @@ public class UserServiceImpl implements UserService {
 		obj.setMail(dto.getMail());
 		
 		User updatedObj = userRepository.save(obj);
+		
+		if(obj!=null) 
+			TaskMgmtApplication.logResult(ENTITY_NAME + " updated!", "INFO");
+		
 		return UserDto.mapEntityToDto(updatedObj);
 	}
 
@@ -73,6 +82,10 @@ public class UserServiceImpl implements UserService {
 		obj.setStatus(0);
 		
 		User updatedObj = userRepository.save(obj);
+		
+		if(obj!=null) 
+			TaskMgmtApplication.logResult(ENTITY_NAME + " deleted!", "INFO");
+		
 		return UserDto.mapEntityToDto(updatedObj);
 	}
 

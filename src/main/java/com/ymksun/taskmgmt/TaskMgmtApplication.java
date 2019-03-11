@@ -13,11 +13,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @SpringBootApplication
 public class TaskMgmtApplication {
 
-	private static final Logger logger = LogManager.getLogger(TaskMgmtApplication.class);
+	private static final Logger LOGGER = LogManager.getLogger(TaskMgmtApplication.class);
 
 	public static void main(String[] args) {
 		SpringApplication.run(TaskMgmtApplication.class, args);
-		logger.info("Applaction Started...");
+		LOGGER.info("Applaction Started...");
 	}
 
 	@Bean
@@ -25,10 +25,21 @@ public class TaskMgmtApplication {
 		return new WebMvcConfigurerAdapter() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("http://localhost:4200").allowedMethods("GET", "POST",
-						"PUT", "DELETE");
+				registry.addMapping("/**").allowedOrigins("http://localhost:4200", "http://localhost:8080")
+						.allowedMethods("GET", "POST", "PUT", "DELETE");
 			}
 		};
+	}
+
+	public static void logResult(String result, String type) {
+		switch (type) {
+			case "INFO":
+				LOGGER.info(result);
+				break;
+			case "DEBUG":
+				LOGGER.debug(result);
+				break;
+		}
 	}
 
 }

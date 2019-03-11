@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ymksun.taskmgmt.TaskMgmtApplication;
 import com.ymksun.taskmgmt.exception.ResourceCannotBeSavedException;
 import com.ymksun.taskmgmt.exception.ResourceNotFoundException;
 import com.ymksun.taskmgmt.exception.ResourceCannotBeSavedException.RESOURCE_CANNOT_BE_CREATED_REASON;
@@ -39,6 +40,10 @@ public class TaskListServiceImpl implements TaskListService {
 		}
 		
 		TaskList obj = taskListRepository.save(TaskListDto.mapDtoToEntity(dto));
+		
+		if(obj!=null) 
+			TaskMgmtApplication.logResult(ENTITY_NAME + " saved!", "INFO");
+		
 		return TaskListDto.mapEntityToDto(obj);
 	}
 
@@ -60,6 +65,10 @@ public class TaskListServiceImpl implements TaskListService {
 		obj.getBoard().setId(dto.getBoardId());
 		
 		TaskList updatedObj = taskListRepository.save(obj);
+		
+		if(obj!=null) 
+			TaskMgmtApplication.logResult(ENTITY_NAME + " updated!", "INFO");
+		
 		return TaskListDto.mapEntityToDto(updatedObj);
 	}
 
@@ -70,6 +79,10 @@ public class TaskListServiceImpl implements TaskListService {
 		obj.setStatus(0);
 		
 		TaskList updatedObj = taskListRepository.save(obj);
+		
+		if(obj!=null) 
+			TaskMgmtApplication.logResult(ENTITY_NAME + " deleted!", "INFO");
+		
 		return TaskListDto.mapEntityToDto(updatedObj);
 	}
 
